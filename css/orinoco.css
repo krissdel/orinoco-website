@@ -1,0 +1,164 @@
+
+
+
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: center;
+}
+
+
+/* -----[main mobile]------------------------ */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: center;
+    justify-content: space-around;
+    padding-bottom: 10%;
+  
+}
+
+.main_menu_mobile li{
+    position: relative;
+}
+
+ul.main_menu_mobile {
+    padding-inline-start: 0px;
+    padding-inline-end: 40px;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0rem;
+    display: block;
+    padding: 0px;
+    
+  }
+a {
+    color: #212529;
+}  
+  
+    
+
+
+/* -----[fin mobile]----------------------------------- */
+
+
+
+.main_menu > li {
+    display: block;
+    position: relative;
+    padding-top: 20px;  
+    padding-bottom: 20px; 
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+.card {
+    align-items: center;
+}
+
+cart.dropDown ul {
+    position: absolute;
+    background-color: white;
+    transform: translate(-85%);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 380px;
+    top: 190%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+cart.dropDown {
+    z-index: 2;
+    
+}
+
+.footer-dropDown {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.resizeImage{
+    width: 80px;
+    height: auto;
+    border-radius: 10%;
+  }
+
+.total {
+    text-align: end;
+    font-weight: 500;
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+}  
+.price{
+    font-size: 15px;
+    font-weight: lighter;
+    width: 15%;
+}
+.btn-primary{
+    cursor: pointer;
+    border-radius: 20px;
+    width: 160px;
+}
+.btn-secondary{
+    cursor: pointer;
+    border-radius: 20px;
+    width: 160px;
+}
+.resume{
+    padding: 20px;
+}
+.cam {
+    width: 30%;
+    text-align: left;
+}
+
+.modal-footer{
+    justify-content: space-around;
+}
+.modal-body{
+    width: 100%;
+}
+.qty{
+    width: 10%;
+
+}
+.name{
+    border-color: black;
+}
+li.resume-cam {
+    padding-top: 20px;
+}
+/* -----[modal]------------------------------------- */
+
+.modal-header{
+    background-color: #f3e9f1;
+}
+.modal-title {
+    width: 58%;
+    text-align: center;
+    line-height: 2.5;
+}
+.logo_modal{
+    max-height: 40px;
+}
+.modal-header .close {
+    padding-right: 1rem;
+    padding-top: 1rem;
+    margin-top: -1rem;
+}
+#numCommande {
+    font-weight: bold;
+    margin-left: 10px;
+}
