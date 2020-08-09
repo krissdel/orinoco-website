@@ -11,7 +11,7 @@ class Form {
 
 
 
-    if(this.data = 0) 
+    if(this.data ) 
       
       console.log(" pourquoi?");
       console.log(this.data);
