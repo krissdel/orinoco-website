@@ -2,24 +2,31 @@
 class Form {
   constructor() {
     this.data = this.getAndValidateData();
-    if (!this.data) {
-      console.log( 'montrer le modal');
-      // $("#formModal").modal('show');     
-      // $("#ShowformModal").modal('show');     
+    if (!this.data)
+    console.log( 'montrer le modal');
+    console.log(!this.data);
+    $("#formModal").modal('show');   // laisse la modal ouverte si toutes les données ne sont pas remplies  
+  return
+    
 
-      // $('#formModal').data('bs.modal').isShown = false;
-      // $('#formModal').modal('lock');
 
-      return  //$("#ShowformModal").modal('show'); 
-    }
+
+    if(this.data = 0) 
+      
+      console.log(" pourquoi?");
+      console.log(this.data);
+      $("#formModal").modal('hide');
+    
+    return this.sendData();
+  
+
     this.data.products = [];
     const size = eshop.panier.content.length;
     for (var i = 0; i < size; i++) {
       this.data.products.push(eshop.panier.content[i].id);
       
     }
-    // $("#ShowformModal").modal('show');     
-
+    
     this.sendData();
   }
   // ICI =============[envoi de la commande au server]=============================================================
@@ -95,28 +102,24 @@ class Form {
     };
     let errors = 0;
   
-    if (!data.email) { 
+    if (!data.email)  
       Swal.fire('Veuillez entrer une adresse @mail valide');    
-    }
-    if (!data.city) {    
+    
+    if (!data.city)     
       Swal.fire('Veuillez entrer une ville valide');
-    }
-
-    if (!data.address) {   
+    
+    if (!data.address)    
       Swal.fire('Veuillez entrer une adresse valide');
-    }
-
-    if (!data.lastName){ 
+    
+    if (!data.lastName) 
       Swal.fire('Veuillez entrer un prénom valide');
-    }
-
-    if (!data.firstName){   
+    
+    if (!data.firstName)   
       Swal.fire('Veuillez entrer un Nom valide');
-
-    }
-    else (errors > 0) 
+    
+    if (errors > 0) 
       console.log("montrer la modale");
-          //  $("#ShowformModal").modal('show');     
+           $("#formModal").modal('show');     
     
 
   }

@@ -122,6 +122,8 @@ get dropDownTemplate(){
   sendToForm(){
     document.getElementById("formCartResume").innerHTML = this.makeResume().resume;
     document.getElementById("total").innerHTML = this.makeResume().amount/100 ;
+        
+
 
   }
 
