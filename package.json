@@ -1,0 +1,23 @@
+{
+  "name": "orinoco-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "makeDoc": "node ./node_modules/jsdoc/jsdoc.js -d ./doc -r ./js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krissdel/orinoco-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krissdel/orinoco-website/issues"
+  },
+  "homepage": "https://github.com/krissdel/orinoco-website#readme",
+  "devDependencies": {
+    "jsdoc": "^3.6.5"
+  }
+}

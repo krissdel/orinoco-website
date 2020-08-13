@@ -1,3 +1,7 @@
+/**
+ * affiche et stock les informations des produits commandés
+ * @class
+ */
 class Panier extends Composant{
   constructor(name, domTarget){
     super(name, domTarget, "cart");
@@ -18,6 +22,11 @@ class Panier extends Composant{
 
 // -----[nombre de produits dans le panier icon notification]------------------------------------------------
 
+  /**
+   * [minifiedTemplate description]
+   *
+   * @return  {string}  [return description]
+   */
   get minifiedTemplate(){
     return `
       

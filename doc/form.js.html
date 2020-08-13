@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: form.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: form.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * Classe qui affiche, valide et envoi le formulaire
+ * @class
+ */
+class Form {
+
+  /**
+   * contructeuir de la classe
+   * @constructor
+   */
+  constructor() {
+    this.data = this.getAndValidateData();
+    if (!this.data) { //si false on réaffiche la modal
+      $("#formModal").modal('show');   // laisse la modal ouverte si toutes les données ne sont pas remplies  
+      return;
+    }
+    // les données sont valides
+
+    $("#formModal").modal('hide'); 
+
+    //on regénère la liste des produits commandés
+    this.data.products = [];
+    const size = eshop.panier.content.length;
+    for (var i = 0; i &lt; size; i++) {
+      this.data.products.push(eshop.panier.content[i].id);  
+    }
+    
+    //on envoi le formulaire
+    this.sendData();
+  }
+  // ICI =============[envoi de la commande au server]=============================================================
+
+  /**
+   * envoi la 
+   * @return {void}
+   */
+  async sendData() {
+    try {
+      let result = await fetch(
+        src + "/order",                 //src= "http://localhost:3000/api/cameras"
+        {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.data)
+        });
+
+      result = await result.json();
+
+      // ----[tant que la longueur du panier > 0  .pop suprime les élements du panier]--------------
+
+      while (eshop.panier.content.length > 0) {
+        eshop.panier.content.pop();
+      }
+      // while (this.data = this.getAndValidateData()){
+      //   eshop.panier.content.pop();
+      // }
+      $(".header-icons-noti").html(0);
+
+      // -----[sweetAlert]----------------------------------------------------------
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Vôtre commande a éte envoyée avec succès : commande n°'+result.orderId  //server ok
+      })
+    }
+
+    // LA ==================================================================================
+
+    catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'nous avons rencontré une erreur veuillez recommencer !', // erreur server
+      })
+    }
+  }
+
+  // -----[envoie data valide]---------------------------------------------------------
+
+  /**
+   * verifie les données saisie
+   * @return {JSON|boolean} si les données sont valides retourne les données, sinon retourne false
+   */
+  getAndValidateData() {
+    const data = {
+      "email": this.filterEmail("email"),
+      "city": this.filterString("city"),
+      "address": this.filterString("adress"),
+      "lastName": this.filterString("prenom"),
+      "firstName": this.filterString("nom")
+    };
+    let errors = 0;
+  
+    if (!data.email){
+      Swal.fire('Veuillez entrer une adresse @mail valide');    
+      errors++;
+    }
+    
+    if (!data.city){
+      Swal.fire('Veuillez entrer une ville valide');  
+      errors++;
+    }
+    
+    if (!data.address) {   
+      Swal.fire('Veuillez entrer une adresse valide');  
+      errors++;
+    }
+    
+    if (!data.lastName) {
+      Swal.fire('Veuillez entrer un prénom valide');  
+      errors++;
+    }
+    
+    if (!data.firstName)  { 
+      Swal.fire('Veuillez entrer un Nom valide');  
+      errors++;
+    }
+    
+    if (errors > 0) {
+      console.log("montrer la modale");
+      $("#formModal").modal('show');
+      return false;
+    }
+    return {contact : data};
+
+  }
+
+  // ===================================================================================================
+  /**
+   * 
+   * @param {string} str 
+   * @return {string|boolean}
+   */
+
+  //  -----[ obligation d'une adresse mail valide]-----------------------------------------------------
+
+  filterEmail(ref) {
+    // const domTarget = document.getElementById(ref);
+    const str = document.getElementById(ref).value;
+    const arobase = str.indexOf("@");              // indexOf indique le moment dans la chaine ou se trouve "@"
+    if (arobase === -1) {            // return -1 si ("@" pas trouvé)
+      this.showError(ref);
+      return false;
+    }
+    const str2 = str.slice(arobase); //slice() extrait une section d'une chaine de caractères et la retourne comme une nouvelle chaine de caractères
+    if (str2.indexOf(".") === -1) {
+      this.showError(ref);
+      return false;
+    }
+    return str;
+  }
+  // -----[obligation de rentrer du texte ds l'input text]------------------------------------------------$
+
+  /**
+   * [description]
+   * @param {string} ref l'id de l'élément du formulaire à valider
+   * @returns {string|boolean} rertourne la chaine validée ou false si la chaine n'est pas valide
+   */
+  filterString(ref) {
+    // const domTarget = document.getElementById(ref);
+    const str = document.getElementById(ref).value;
+    if (str.length &lt;= 2) {
+      this.showError(ref);
+      return false;
+    }
+    const isNumber = Number(str);
+    // if (Number(str) !== NaN) 
+    if (typeof isNumber !== "number") 
+    {
+      this.showError(ref);
+      return false;
+    }
+    return str;
+  }
+
+  showError(ref) {
+    const str = document.getElementById("#formModal")  //.className("inputError");
+  } 
+    
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Form.html">Form</a></li><li><a href="Panier.html">Panier</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Wed Aug 12 2020 14:33:18 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,39 +1,43 @@
 
+/**
+ * Classe qui affiche, valide et envoi le formulaire
+ * @class
+ */
 class Form {
+
+  /**
+   * contructeuir de la classe
+   * @constructor
+   */
   constructor() {
     this.data = this.getAndValidateData();
-    if (!this.data)
-    console.log( 'montrer le modal');
-    console.log(!this.data);
-    $("#formModal").modal('show');   // laisse la modal ouverte si toutes les données ne sont pas remplies  
-  return
-    
+    if (!this.data) { //si false on réaffiche la modal
+      $("#formModal").modal('show');   // laisse la modal ouverte si toutes les données ne sont pas remplies  
+      return;
+    }
+    // les données sont valides
 
+    $("#formModal").modal('hide'); 
 
-
-    if(this.data ) 
-      
-      console.log(" pourquoi?");
-      console.log(this.data);
-      $("#formModal").modal('hide');
-    
-    return this.sendData();
-  
-
+    //on regénère la liste des produits commandés
     this.data.products = [];
     const size = eshop.panier.content.length;
     for (var i = 0; i < size; i++) {
-      this.data.products.push(eshop.panier.content[i].id);
-      
+      this.data.products.push(eshop.panier.content[i].id);  
     }
     
+    //on envoi le formulaire
     this.sendData();
   }
   // ICI =============[envoi de la commande au server]=============================================================
 
+  /**
+   * envoi la 
+   * @return {void}
+   */
   async sendData() {
     try {
-      const result = await fetch(
+      let result = await fetch(
         src + "/order",                 //src= "http://localhost:3000/api/cameras"
         {
           method: 'post',
@@ -44,9 +48,7 @@ class Form {
           body: JSON.stringify(this.data)
         });
 
-      console.log(result.status);
-
-
+      result = await result.json();
 
       // ----[tant que la longueur du panier > 0  .pop suprime les élements du panier]--------------
 
@@ -74,7 +76,7 @@ class Form {
 
       Toast.fire({
         icon: 'success',
-        title: 'Vôtre commande a éte envoyée avec success'  //server ok
+        title: 'Vôtre commande a éte envoyée avec succès : commande n°'+result.orderId  //server ok
       })
     }
 
@@ -91,36 +93,51 @@ class Form {
 
   // -----[envoie data valide]---------------------------------------------------------
 
+  /**
+   * verifie les données saisie
+   * @return {JSON|boolean} si les données sont valides retourne les données, sinon retourne false
+   */
   getAndValidateData() {
     const data = {
       "email": this.filterEmail("email"),
       "city": this.filterString("city"),
       "address": this.filterString("adress"),
       "lastName": this.filterString("prenom"),
-      "firstName": this.filterString("nom"),
-
+      "firstName": this.filterString("nom")
     };
     let errors = 0;
   
-    if (!data.email)  
+    if (!data.email){
       Swal.fire('Veuillez entrer une adresse @mail valide');    
+      errors++;
+    }
     
-    if (!data.city)     
-      Swal.fire('Veuillez entrer une ville valide');
+    if (!data.city){
+      Swal.fire('Veuillez entrer une ville valide');  
+      errors++;
+    }
     
-    if (!data.address)    
-      Swal.fire('Veuillez entrer une adresse valide');
+    if (!data.address) {   
+      Swal.fire('Veuillez entrer une adresse valide');  
+      errors++;
+    }
     
-    if (!data.lastName) 
-      Swal.fire('Veuillez entrer un prénom valide');
+    if (!data.lastName) {
+      Swal.fire('Veuillez entrer un prénom valide');  
+      errors++;
+    }
     
-    if (!data.firstName)   
-      Swal.fire('Veuillez entrer un Nom valide');
+    if (!data.firstName)  { 
+      Swal.fire('Veuillez entrer un Nom valide');  
+      errors++;
+    }
     
-    if (errors > 0) 
+    if (errors > 0) {
       console.log("montrer la modale");
-           $("#formModal").modal('show');     
-    
+      $("#formModal").modal('show');
+      return false;
+    }
+    return {contact : data};
 
   }
 
@@ -128,7 +145,7 @@ class Form {
   /**
    * 
    * @param {string} str 
-   * @returns {string|boolean}
+   * @return {string|boolean}
    */
 
   //  -----[ obligation d'une adresse mail valide]-----------------------------------------------------
@@ -148,7 +165,13 @@ class Form {
     }
     return str;
   }
-  // -----[obligation de rentrer du texte ds l'input text]------------------------------------------------
+  // -----[obligation de rentrer du texte ds l'input text]------------------------------------------------$
+
+  /**
+   * [description]
+   * @param {string} ref l'id de l'élément du formulaire à valider
+   * @returns {string|boolean} rertourne la chaine validée ou false si la chaine n'est pas valide
+   */
   filterString(ref) {
     // const domTarget = document.getElementById(ref);
     const str = document.getElementById(ref).value;
