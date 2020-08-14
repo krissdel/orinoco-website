@@ -17,7 +17,7 @@ class Form {
     }
     // les données sont valides
 
-    $("#formModal").modal('hide'); 
+    $("#formModal").modal('hide');    // on ferme la modale de paiement
 
     //on regénère la liste des produits commandés
     this.data.products = [];
@@ -32,7 +32,7 @@ class Form {
   // ICI =============[envoi de la commande au server]=============================================================
 
   /**
-   * envoi de la commande au server
+   * envoi de la commande au server (await fetch)
    * @return {void}
    */
   async sendData() {
@@ -172,7 +172,7 @@ class Form {
   /**
    * [description]
    * @param {string} ref l'id de l'élément du formulaire à valider
-   * @returns {string|boolean} rertourne la chaine validée ou false si la chaine n'est pas valide
+   * @returns {string|boolean} retourne la chaine validée ou false si la chaine n'est pas valide
    */
   filterString(ref) {
     const str = document.getElementById(ref).value;

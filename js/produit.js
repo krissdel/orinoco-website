@@ -7,8 +7,8 @@
 class Produit extends Composant{
   /**
    * constructeur de la class produit
-   * @param {*} data 
-   * @param {*} domTarget 
+   * @param {string|arr} data 
+   * @param {string} domTarget 
    */
   constructor(data, domTarget){
     super(data.name, domTarget, "article");
@@ -110,7 +110,6 @@ class Produit extends Composant{
  */
   addToCart(){
     eshop.panier.add({
-
       image : this.imageUrl,
       name : this.text,
       price : this.price,      

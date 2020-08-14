@@ -6,9 +6,9 @@ class Composant{
   /**
    * constructor de la class composant
    * 
-   * @param {*} name 
-   * @param {*} domTarget 
-   * @param {*} tagName 
+   * @param {string} name 
+   * @param {string} domTarget 
+   * @param {string} tagName 
    */
   constructor(name, domTarget, tagName){
     name      = usableName(name);
@@ -16,7 +16,7 @@ class Composant{
     this.name = name;
     domTarget.appendChild(this.DOM);
     eshop[name] = this;
-    console.log (this.DOM);
+    
   }
 }
 
