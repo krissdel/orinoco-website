@@ -6,7 +6,7 @@
 class Form {
 
   /**
-   * contructeuir de la classe
+   * contructeur de la classe
    * @constructor
    */
   constructor() {
@@ -32,7 +32,7 @@ class Form {
   // ICI =============[envoi de la commande au server]=============================================================
 
   /**
-   * envoi la 
+   * envoi de la commande au server
    * @return {void}
    */
   async sendData() {
@@ -55,9 +55,6 @@ class Form {
       while (eshop.panier.content.length > 0) {
         eshop.panier.content.pop();
       }
-      // while (this.data = this.getAndValidateData()){
-      //   eshop.panier.content.pop();
-      // }
       $(".header-icons-noti").html(0);
 
       // -----[sweetAlert]----------------------------------------------------------
@@ -74,13 +71,15 @@ class Form {
         }
       })
 
+
+// LA ==================================================================================
+
       Toast.fire({
         icon: 'success',
         title: 'Vôtre commande a éte envoyée avec succès : commande n°'+result.orderId  //server ok
       })
     }
 
-    // LA ==================================================================================
 
     catch (e) {
       Swal.fire({
@@ -91,7 +90,7 @@ class Form {
     }
   }
 
-  // -----[envoie data valide]---------------------------------------------------------
+  // -----[vérification de données a envoyer]---------------------------------------------------------
 
   /**
    * verifie les données saisie
@@ -149,11 +148,14 @@ class Form {
    */
 
   //  -----[ obligation d'une adresse mail valide]-----------------------------------------------------
-
+/**
+ * [si l'adresse mail n'est pas valide return false sinon return string]
+ * @param {string} ref 
+ * @return (false || string)
+ */
   filterEmail(ref) {
-    // const domTarget = document.getElementById(ref);
     const str = document.getElementById(ref).value;
-    const arobase = str.indexOf("@");              // indexOf indique le moment dans la chaine ou se trouve "@"
+    const arobase = str.indexOf("@"); // indexOf indique le moment dans la chaine ou se trouve "@"
     if (arobase === -1) {            // return -1 si ("@" pas trouvé)
       this.showError(ref);
       return false;
@@ -173,7 +175,6 @@ class Form {
    * @returns {string|boolean} rertourne la chaine validée ou false si la chaine n'est pas valide
    */
   filterString(ref) {
-    // const domTarget = document.getElementById(ref);
     const str = document.getElementById(ref).value;
     if (str.length <= 2) {
       this.showError(ref);
@@ -190,7 +191,7 @@ class Form {
   }
 
   showError(ref) {
-    const str = document.getElementById("#formModal")  //.className("inputError");
+    const str = document.getElementById("#formModal");
   } 
     
 }

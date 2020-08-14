@@ -40,8 +40,8 @@ class Panier extends Composant{
  
 // -----[evite la répétition des objets déjas commandés en métant un x1]-------------------------------------
   /**
-
-   * @returns {object}
+    évite la répétition des objets ds le panier en méttant un quantité
+   * @return {object}
    */
   makeResume(){
     const newContent = {};
@@ -78,7 +78,10 @@ class Panier extends Composant{
 // -----[ouverture du panier dropDownTemplate]--------------------------------------------------------------------
 
  
-
+/**
+ * ouverture de la modale du panier
+ * @return [produits dans le panier avec qqté, prix, img]
+ */
 get dropDownTemplate(){
     const {resume, amount} = this.makeResume();
 
@@ -128,6 +131,10 @@ get dropDownTemplate(){
 
   
 // -----[envoi des élements du panier vers le formulaire]----------------------------
+
+/**
+ * envoi des éléments du panier vers le formulaire
+ */
   sendToForm(){
     document.getElementById("formCartResume").innerHTML = this.makeResume().resume;
     document.getElementById("total").innerHTML = this.makeResume().amount/100 ;

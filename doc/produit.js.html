@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: produit.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: produit.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * class qui récupére et affiche les produits
+ * @class
+ */
+
+
+class Produit extends Composant{
+  /**
+   * constructeur de la class produit
+   * @param {*} data 
+   * @param {*} domTarget 
+   */
+  constructor(data, domTarget){
+    super(data.name, domTarget, "article");
+    this.description = data.description;
+    this.imageUrl    = data.imageUrl;
+    this.lenses      = data.lenses;
+    this.idLense     = 0;
+    this.text        = data.name;
+    this.price       = data.price;
+    this.id          = data._id;
+    this.minified    = true;
+    this.DOM.onclick = this.click.bind(this);
+    this.render(); 
+  }
+  render(){
+    this.DOM.innerHTML = this.minifiedTemplate;
+  }
+
+  // -----[affichage des articles dans une modal bootstrap]--------------------------------------------------------
+/**
+ * affichages et description des produits dans la modale bootsrap
+ * @return {string}
+ */
+  get minifiedTemplate(){
+    this.DOM.className = "article";
+    return `
+    &lt;div class="card" style="width: 18rem;">
+      &lt;img class="card-img-top" src="${this.imageUrl}" alt="Card image cam">
+      &lt;div class="card-body">
+       &lt;h2>${this.text}&lt;/h2>
+         &lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${this.name}Modal">
+           voir ${this.text} 
+         &lt;/button>
+        
+        &lt;p class="card-text">&lt;/p>
+      &lt;/div>
+    &lt;/div>
+    
+    
+        &lt;div class="modal fade" id="${this.name}Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        &lt;div class="modal-dialog" role="document">
+          &lt;div class="modal-content">
+            &lt;div class="modal-header">
+              &lt;h5 class="modal-title" id="exampleModalLabel" >${this.text}&lt;/h5>
+
+          
+              &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                &lt;span aria-hidden="true">&amp;times;&lt;/span>
+              &lt;/button>
+            &lt;/div>
+            &lt;div class="modal-body">
+              ${this.description}
+              &lt;img src="${this.imageUrl}">
+              &lt;h4>${this.getPrice()}&lt;/h4> 
+              ${this.showVariants()}  
+            &lt;/div>
+
+
+            &lt;div class="modal-footer">
+              &lt;button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer&lt;/button>
+              &lt;button type="button" class="btn btn-primary" onclick="eshop.${this.name}.addToCart()" data-dismiss="modal">ajouter au panier&lt;/button>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>  
+    `;
+  }
+
+// -----[ajout des options de lentilles]-----------------------------------------------------------------
+/**
+ * montre les différentes options de lentilles pour les produits 
+ * @return {string}
+ */
+  showVariants(){
+    let html = `&lt;div class="btn-group" data-toggle="buttons" >`;
+    for (let i=0; i&lt; this.lenses.length; i++){
+
+        html += `
+        
+        &lt;label class="btn btn-default ${(this.idLense === i) ? 'active' : "active"}">
+            &lt;input type="radio"   name="view-opt-bt-group-value" value="${this.lenses[i]}" ${(this.idLense === i) ? 'checked="checked"' : ""}>${this.lenses[i]}
+            &lt;/label>
+            &lt;input type="hidden" name="view-opt-bt-group-value" value="${this.lenses[i]}">
+               
+            `;            
+            
+          }
+          return html+"&lt;/div>";
+  }
+  
+  click(){
+    this.minified = !this.minified;
+  }
+
+  // -----[ajout de l'article dans le panier]---------------------------------------------------------
+/**
+ * ajoute les articles sélectionnés dans le panier
+ * 
+ */
+  addToCart(){
+    eshop.panier.add({
+
+      image : this.imageUrl,
+      name : this.text,
+      price : this.price,      
+      lentille: $( "input:checked" ).val(), //choix de la lentille
+      id : this.id
+    });
+  }
+  addToPanier(){
+    eshop.panier.add(this.minified)
+  }
+  /**
+   * prix retourné en euros
+   * @return [arr]
+   */
+  getPrice(){
+    return (this.price / 100)+" €"; // prix retourné en euros
+  }
+
+  
+ 
+
+  
+
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Composant.html">Composant</a></li><li><a href="Form.html">Form</a></li><li><a href="Panier.html">Panier</a></li><li><a href="Produit.html">Produit</a></li></ul><h3>Global</h3><ul><li><a href="global.html#eshop">eshop</a></li><li><a href="global.html#header">header</a></li><li><a href="global.html#initShop">initShop</a></li><li><a href="global.html#usableName">usableName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Fri Aug 14 2020 08:45:57 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

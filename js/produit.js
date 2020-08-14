@@ -1,4 +1,15 @@
+/**
+ * class qui récupére et affiche les produits
+ * @class
+ */
+
+
 class Produit extends Composant{
+  /**
+   * constructeur de la class produit
+   * @param {*} data 
+   * @param {*} domTarget 
+   */
   constructor(data, domTarget){
     super(data.name, domTarget, "article");
     this.description = data.description;
@@ -16,8 +27,11 @@ class Produit extends Composant{
     this.DOM.innerHTML = this.minifiedTemplate;
   }
 
-  // -----[ajout des articles dans une modal bootstrap]--------------------------------------------------------
-
+  // -----[affichage des articles dans une modal bootstrap]--------------------------------------------------------
+/**
+ * affichages et description des produits dans la modale bootsrap
+ * @return {string}
+ */
   get minifiedTemplate(){
     this.DOM.className = "article";
     return `
@@ -64,7 +78,10 @@ class Produit extends Composant{
   }
 
 // -----[ajout des options de lentilles]-----------------------------------------------------------------
-
+/**
+ * montre les différentes options de lentilles pour les produits 
+ * @return {string}
+ */
   showVariants(){
     let html = `<div class="btn-group" data-toggle="buttons" >`;
     for (let i=0; i< this.lenses.length; i++){
@@ -87,7 +104,10 @@ class Produit extends Composant{
   }
 
   // -----[ajout de l'article dans le panier]---------------------------------------------------------
-
+/**
+ * ajoute les articles sélectionnés dans le panier
+ * 
+ */
   addToCart(){
     eshop.panier.add({
 
@@ -101,8 +121,12 @@ class Produit extends Composant{
   addToPanier(){
     eshop.panier.add(this.minified)
   }
+  /**
+   * prix retourné en euros
+   * @return [arr]
+   */
   getPrice(){
-    return (this.price / 100)+" €";
+    return (this.price / 100)+" €"; // prix retourné en euros
   }
 
   

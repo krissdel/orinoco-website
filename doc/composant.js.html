@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: composant.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,40 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: composant.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * class qui definit les composants du site 
+ * @class
+ */
+class Composant{
+  /**
+   * constructor de la class composant
+   * 
+   * @param {*} name 
+   * @param {*} domTarget 
+   * @param {*} tagName 
+   */
+  constructor(name, domTarget, tagName){
+    name      = usableName(name);
+    this.DOM  = document.createElement(tagName);
+    this.name = name;
+    domTarget.appendChild(this.DOM);
+    eshop[name] = this;
+    console.log (this.DOM);
+  }
+}
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+</code></pre>
+        </article>
+    </section>
 
 
 
