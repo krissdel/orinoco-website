@@ -80,7 +80,7 @@ class Panier extends Composant{
  
 /**
  * ouverture de la modale du panier
- * @return [produits dans le panier avec qqté, prix, img]
+ * @return [produits dans le panier avec qté, prix, img]
  */
 get dropDownTemplate(){
     const {resume, amount} = this.makeResume();
