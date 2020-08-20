@@ -38,7 +38,7 @@ class Form {
   async sendData() {
     try {
       let result = await fetch(
-        src + "/order",                 //src= "http://localhost:3000/api/cameras"
+       src + "/order",                 //src= "http://localhost:3000/api/cameras"
         {
           method: 'post',
           headers: {
@@ -180,9 +180,7 @@ class Form {
       this.showError(ref);
       return false;
     }
-    const isNumber = Number(str);
-    // if (Number(str) !== NaN) 
-    if (typeof isNumber !== "number") 
+    if (Number(str) !== NaN) 
     {
       this.showError(ref);
       return false;

@@ -117,6 +117,7 @@ class Produit extends Composant{
       id : this.id
     });
   }
+  
   addToPanier(){
     eshop.panier.add(this.minified)
   }

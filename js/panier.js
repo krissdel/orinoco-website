@@ -116,7 +116,7 @@ get dropDownTemplate(){
     this.render();
   }
 
-  showHide(){
+  showHide(){                  //montre ou cache la modale du panier 
     switch (this.state){
       case "minified" :
         if (this.content.length===0)  return;
