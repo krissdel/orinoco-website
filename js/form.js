@@ -180,8 +180,7 @@ class Form {
       return false;
     }
     const isNumber = Number(str);
-    if (typeof isNumber !== "number") 
-    {
+    if (typeof isNumber !== "number"){
       this.showError(ref);
       return false;
     }
