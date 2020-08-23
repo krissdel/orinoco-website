@@ -132,7 +132,6 @@ class Form {
     }
     
     if (errors > 0) {
-      console.log("montrer la modale");
       $("#formModal").modal('show');
       return false;
     }
